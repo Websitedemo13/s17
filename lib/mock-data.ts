@@ -1,0 +1,299 @@
+"use client"
+
+// Real market data simulation
+export const mockTraders = [
+  {
+    id: "1",
+    name: "Alex Chen",
+    avatar: "/placeholder.svg?height=80&width=80",
+    totalROI: 245.8,
+    monthlyROI: 18.5,
+    followers: 12547,
+    winRate: 78.5,
+    riskLevel: "Medium",
+    strategy: "Swing Trading",
+    copiers: 1247,
+    totalTrades: 234,
+    verified: true,
+    description: "Professional forex trader with 8+ years experience. Specializing in EUR/USD and GBP/USD pairs.",
+    performance: [
+      { month: "Jan", roi: 12.5 },
+      { month: "Feb", roi: 8.3 },
+      { month: "Mar", roi: 15.7 },
+      { month: "Apr", roi: 22.1 },
+      { month: "May", roi: 18.5 },
+    ],
+    recentTrades: [
+      { symbol: "EUR/USD", action: "BUY", profit: 245.5, date: "2024-01-15", status: "closed" },
+      { symbol: "GBP/USD", action: "SELL", profit: -89.2, date: "2024-01-14", status: "closed" },
+      { symbol: "USD/JPY", action: "BUY", profit: 156.8, date: "2024-01-13", status: "open" },
+    ],
+  },
+  {
+    id: "2",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=80&width=80",
+    totalROI: 198.3,
+    monthlyROI: 15.2,
+    followers: 8934,
+    winRate: 82.1,
+    riskLevel: "Low",
+    strategy: "Scalping",
+    copiers: 892,
+    totalTrades: 456,
+    verified: true,
+    description: "Conservative trader focusing on consistent small profits with minimal risk exposure.",
+    performance: [
+      { month: "Jan", roi: 9.8 },
+      { month: "Feb", roi: 11.2 },
+      { month: "Mar", roi: 13.5 },
+      { month: "Apr", roi: 16.8 },
+      { month: "May", roi: 15.2 },
+    ],
+    recentTrades: [
+      { symbol: "BTC/USD", action: "BUY", profit: 1245.3, date: "2024-01-15", status: "closed" },
+      { symbol: "ETH/USD", action: "SELL", profit: 567.8, date: "2024-01-14", status: "closed" },
+    ],
+  },
+  {
+    id: "3",
+    name: "Mike Rodriguez",
+    avatar: "/placeholder.svg?height=80&width=80",
+    totalROI: 167.9,
+    monthlyROI: 12.8,
+    followers: 6234,
+    winRate: 75.3,
+    riskLevel: "High",
+    strategy: "Day Trading",
+    copiers: 623,
+    totalTrades: 789,
+    verified: true,
+    description: "Aggressive day trader specializing in cryptocurrency and tech stocks.",
+    performance: [
+      { month: "Jan", roi: 8.5 },
+      { month: "Feb", roi: 14.2 },
+      { month: "Mar", roi: 11.8 },
+      { month: "Apr", roi: 16.3 },
+      { month: "May", roi: 12.8 },
+    ],
+    recentTrades: [
+      { symbol: "AAPL", action: "BUY", profit: 345.6, date: "2024-01-15", status: "open" },
+      { symbol: "TSLA", action: "SELL", profit: -123.4, date: "2024-01-14", status: "closed" },
+    ],
+  },
+  {
+    id: "4",
+    name: "Emma Wilson",
+    avatar: "/placeholder.svg?height=80&width=80",
+    totalROI: 134.7,
+    monthlyROI: 10.5,
+    followers: 4567,
+    winRate: 71.8,
+    riskLevel: "Medium",
+    strategy: "Position Trading",
+    copiers: 456,
+    totalTrades: 123,
+    verified: false,
+    description: "Long-term position trader with focus on fundamental analysis and market trends.",
+    performance: [
+      { month: "Jan", roi: 7.2 },
+      { month: "Feb", roi: 9.8 },
+      { month: "Mar", roi: 12.1 },
+      { month: "Apr", roi: 11.5 },
+      { month: "May", roi: 10.5 },
+    ],
+    recentTrades: [{ symbol: "GOLD", action: "BUY", profit: 234.5, date: "2024-01-12", status: "open" }],
+  },
+  {
+    id: "5",
+    name: "David Kim",
+    avatar: "/placeholder.svg?height=80&width=80",
+    totalROI: 189.4,
+    monthlyROI: 14.7,
+    followers: 7891,
+    winRate: 79.2,
+    riskLevel: "Low",
+    strategy: "Algorithmic Trading",
+    copiers: 789,
+    totalTrades: 1234,
+    verified: true,
+    description: "Quantitative trader using advanced algorithms and machine learning for market analysis.",
+    performance: [
+      { month: "Jan", roi: 11.3 },
+      { month: "Feb", roi: 13.8 },
+      { month: "Mar", roi: 15.2 },
+      { month: "Apr", roi: 16.1 },
+      { month: "May", roi: 14.7 },
+    ],
+    recentTrades: [
+      { symbol: "SPY", action: "BUY", profit: 456.7, date: "2024-01-15", status: "closed" },
+      { symbol: "QQQ", action: "BUY", profit: 234.8, date: "2024-01-14", status: "open" },
+    ],
+  },
+]
+
+export const mockSocialPosts = [
+  {
+    id: "1",
+    authorId: "1",
+    authorName: "Alex Chen",
+    authorUsername: "@alexchen",
+    authorAvatar: "/placeholder.svg?height=40&width=40",
+    content:
+      "Just closed a profitable EUR/USD trade! 📈 The technical analysis was spot on - broke through resistance at 1.0950 as predicted. Risk management is key, always set your stop losses! #ForexTrading #TechnicalAnalysis",
+    timestamp: new Date(Date.now() - 1800000).toISOString(),
+    likes: 45,
+    comments: 12,
+    shares: 8,
+    views: 234,
+    isLiked: false,
+    isBookmarked: false,
+    type: "trade",
+    tags: ["forex", "technical-analysis", "eur-usd"],
+  },
+  {
+    id: "2",
+    authorId: "2",
+    authorName: "Sarah Johnson",
+    authorUsername: "@sarahjohnson",
+    authorAvatar: "/placeholder.svg?height=40&width=40",
+    content:
+      "Market volatility is creating great opportunities for scalpers today! 🎯 Remember: small profits add up over time. Consistency beats home runs every time. What's your favorite scalping strategy?",
+    timestamp: new Date(Date.now() - 3600000).toISOString(),
+    likes: 67,
+    comments: 23,
+    shares: 15,
+    views: 456,
+    isLiked: true,
+    isBookmarked: false,
+    type: "text",
+    tags: ["scalping", "strategy", "consistency"],
+  },
+  {
+    id: "3",
+    authorId: "3",
+    authorName: "Mike Rodriguez",
+    authorUsername: "@mikerodriguez",
+    authorAvatar: "/placeholder.svg?height=40&width=40",
+    content:
+      "Bitcoin showing strong momentum above $45k! 🚀 Volume is increasing and we're seeing institutional buying. Next resistance at $47.5k. Always DYOR and manage your risk! #Bitcoin #Crypto",
+    timestamp: new Date(Date.now() - 5400000).toISOString(),
+    likes: 89,
+    comments: 34,
+    shares: 22,
+    views: 678,
+    isLiked: false,
+    isBookmarked: true,
+    type: "text",
+    tags: ["bitcoin", "crypto", "analysis"],
+  },
+  {
+    id: "4",
+    authorId: "4",
+    authorName: "Emma Wilson",
+    authorUsername: "@emmawilson",
+    authorAvatar: "/placeholder.svg?height=40&width=40",
+    content:
+      "Long-term investors should focus on fundamentals over short-term noise. 📊 The companies with strong balance sheets and growing revenues will outperform in the long run. Patience is a virtue in trading!",
+    timestamp: new Date(Date.now() - 7200000).toISOString(),
+    likes: 34,
+    comments: 8,
+    shares: 5,
+    views: 189,
+    isLiked: false,
+    isBookmarked: false,
+    type: "text",
+    tags: ["long-term", "fundamentals", "patience"],
+  },
+  {
+    id: "5",
+    authorId: "5",
+    authorName: "David Kim",
+    authorUsername: "@davidkim",
+    authorAvatar: "/placeholder.svg?height=40&width=40",
+    content:
+      "My algorithm detected unusual options activity in tech stocks today. 🤖 Machine learning models are showing 73% probability of upward movement in the next 5 days. Data-driven trading for the win!",
+    timestamp: new Date(Date.now() - 9000000).toISOString(),
+    likes: 56,
+    comments: 19,
+    shares: 11,
+    views: 345,
+    isLiked: true,
+    isBookmarked: false,
+    type: "text",
+    tags: ["algorithm", "machine-learning", "tech-stocks"],
+  },
+]
+
+// Real market data API simulation
+export const getMarketData = async () => {
+  // Simulate API call delay
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  return {
+    indices: [
+      { symbol: "S&P 500", price: 4567.89, change: "+1.2%", trend: "up" },
+      { symbol: "NASDAQ", price: 14234.56, change: "+0.8%", trend: "up" },
+      { symbol: "DOW", price: 34567.12, change: "-0.3%", trend: "down" },
+    ],
+    forex: [
+      { symbol: "EUR/USD", price: 1.0945, change: "+0.15%", trend: "up" },
+      { symbol: "GBP/USD", price: 1.2678, change: "-0.08%", trend: "down" },
+      { symbol: "USD/JPY", price: 149.85, change: "+0.22%", trend: "up" },
+    ],
+    crypto: [
+      { symbol: "BTC/USD", price: 45234.67, change: "+3.2%", trend: "up" },
+      { symbol: "ETH/USD", price: 2456.78, change: "+2.8%", trend: "up" },
+      { symbol: "ADA/USD", price: 0.4567, change: "-1.2%", trend: "down" },
+    ],
+    commodities: [
+      { symbol: "GOLD", price: 2045.67, change: "+0.5%", trend: "up" },
+      { symbol: "SILVER", price: 24.56, change: "+0.8%", trend: "up" },
+      { symbol: "OIL", price: 78.45, change: "-0.3%", trend: "down" },
+    ],
+  }
+}
+
+// News data with real market events
+export const getNewsData = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 800))
+
+  return [
+    {
+      id: "1",
+      title: "Federal Reserve Signals Potential Rate Cut in Q2 2024",
+      summary:
+        "Fed Chairman Jerome Powell hints at possible interest rate adjustments following recent inflation data, potentially impacting global markets significantly.",
+      category: "economy",
+      source: "Financial Times",
+      timestamp: new Date(Date.now() - 1800000),
+      impact: "high",
+      sentiment: "neutral",
+      url: "https://example.com/news/1",
+    },
+    {
+      id: "2",
+      title: "Bitcoin Surges Past $45,000 as Institutional Adoption Grows",
+      summary:
+        "Major corporations continue to add Bitcoin to their treasury reserves, driving the cryptocurrency to new monthly highs amid growing institutional interest.",
+      category: "crypto",
+      source: "CoinDesk",
+      timestamp: new Date(Date.now() - 3600000),
+      impact: "high",
+      sentiment: "positive",
+      url: "https://example.com/news/2",
+    },
+    {
+      id: "3",
+      title: "Tech Stocks Rally as AI Sector Shows Strong Q4 Performance",
+      summary:
+        "Artificial Intelligence companies report better-than-expected earnings, leading to a broad rally in technology stocks across major indices.",
+      category: "stocks",
+      source: "Bloomberg",
+      timestamp: new Date(Date.now() - 7200000),
+      impact: "medium",
+      sentiment: "positive",
+      url: "https://example.com/news/3",
+    },
+  ]
+}
