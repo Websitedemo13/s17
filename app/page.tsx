@@ -97,7 +97,7 @@ export default function Home() {
       case "top-traders":
         return <TopTradersPage />
       case "live-signals":
-        return <LiveSignalRoom />
+        return <LiveSignalRoomImproved />
       case "social-feed":
         return <SocialFeedPage />
       case "forum":
