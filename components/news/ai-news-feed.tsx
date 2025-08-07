@@ -226,10 +226,7 @@ export function AINewsFeed() {
   }
 
   const handleRefresh = async () => {
-    setIsRefreshing(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsRefreshing(false)
+    await loadNews()
   }
 
   const formatTime = (timestamp: Date) => {
