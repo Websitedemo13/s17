@@ -163,8 +163,29 @@ export function AINewsFeed() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState("latest")
-  const [news, setNews] = useState(mockNews)
+  const [news, setNews] = useState<NewsItem[]>([])
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    loadNews()
+    // Refresh news every 5 minutes
+    const interval = setInterval(loadNews, 5 * 60 * 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const loadNews = async () => {
+    try {
+      setIsRefreshing(true)
+      const newsData = await getNewsData()
+      setNews(newsData)
+    } catch (error) {
+      console.error('Failed to load news:', error)
+    } finally {
+      setIsRefreshing(false)
+      setIsLoading(false)
+    }
+  }
 
   const filteredNews = news.filter((article) => {
     const matchesCategory = selectedCategory === "all" || article.category === selectedCategory
