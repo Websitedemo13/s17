@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuthStore } from "@/lib/auth-store"
+import { getTradingSignals, getSignalProviders, type TradingSignal, type SignalProvider } from "@/lib/api/trading-signals"
 import {
   Radio,
   Users,
