@@ -15,6 +15,7 @@ export const mockTraders = [
     copiers: 1247,
     totalTrades: 234,
     verified: true,
+    subscriptionFee: 49,
     description: "Professional forex trader with 8+ years experience. Specializing in EUR/USD and GBP/USD pairs.",
     performance: [
       { month: "Jan", roi: 12.5 },
