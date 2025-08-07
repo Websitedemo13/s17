@@ -385,7 +385,7 @@ export function DashboardPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => uncopyTrader(position.traderId)}
+                          onClick={() => uncopyTrader(position.id)}
                           className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white bg-transparent"
                         >
                           Stop Copy
