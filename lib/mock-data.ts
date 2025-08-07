@@ -43,6 +43,7 @@ export const mockTraders = [
     copiers: 892,
     totalTrades: 456,
     verified: true,
+    subscriptionFee: 39,
     description: "Conservative trader focusing on consistent small profits with minimal risk exposure.",
     performance: [
       { month: "Jan", roi: 9.8 },
@@ -69,6 +70,7 @@ export const mockTraders = [
     copiers: 623,
     totalTrades: 789,
     verified: true,
+    subscriptionFee: 69,
     description: "Aggressive day trader specializing in cryptocurrency and tech stocks.",
     performance: [
       { month: "Jan", roi: 8.5 },
@@ -95,6 +97,7 @@ export const mockTraders = [
     copiers: 456,
     totalTrades: 123,
     verified: false,
+    subscriptionFee: 29,
     description: "Long-term position trader with focus on fundamental analysis and market trends.",
     performance: [
       { month: "Jan", roi: 7.2 },
@@ -118,6 +121,7 @@ export const mockTraders = [
     copiers: 789,
     totalTrades: 1234,
     verified: true,
+    subscriptionFee: 89,
     description: "Quantitative trader using advanced algorithms and machine learning for market analysis.",
     performance: [
       { month: "Jan", roi: 11.3 },
