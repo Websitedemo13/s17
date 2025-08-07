@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { FullPageLoading } from "@/components/ui/professional-loading"
 import { useAuthStore } from "@/lib/auth-store"
 import { Layout } from "@/components/layout/layout"
 import { LoginPage } from "@/components/auth/login-page"
