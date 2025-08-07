@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Sidebar } from "@/components/layout/sidebar"
-import { Header } from "@/components/layout/header"
+import { ProfessionalHeader } from "@/components/layout/professional-header"
 import { Footer } from "@/components/layout/footer"
 import { AIAssistant } from "@/components/ai/ai-assistant"
 import { NotificationCenter } from "@/components/notifications/notification-center"
