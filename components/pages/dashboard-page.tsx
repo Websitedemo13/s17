@@ -1,8 +1,10 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useTradingStore } from "@/lib/trading-store"
 import { useAuthStore } from "@/lib/auth-store"
+import { portfolioAPI, type PortfolioStats, type Position, type ActivityItem } from "@/lib/api/portfolio"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -270,7 +272,7 @@ export function DashboardPage() {
               </div>
 
               <div className="pt-3 border-t border-gray-700">
-                <p className="text-xs text-gray-400">💡 Consider diversifying into more asset classes to reduce risk</p>
+                <p className="text-xs text-gray-400">�� Consider diversifying into more asset classes to reduce risk</p>
               </div>
             </CardContent>
           </Card>
