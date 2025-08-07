@@ -103,7 +103,7 @@ export function Footer() {
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-gray-400 hover:text-[#10B981] text-sm transition-colors flex items-center gap-2"
                   >
                     <FileText className="h-3 w-3" />
