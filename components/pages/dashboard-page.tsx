@@ -29,6 +29,37 @@ import {
 export function DashboardPage() {
   const { user } = useAuthStore()
   const { copiedTraders, uncopyTrader } = useTradingStore()
+  const [portfolioStats, setPortfolioStats] = useState<PortfolioStats | null>(null)
+  const [positions, setPositions] = useState<Position[]>([])
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (user?.id) {
+      loadDashboardData()
+    }
+  }, [user?.id])
+
+  const loadDashboardData = async () => {
+    if (!user?.id) return
+
+    try {
+      setIsLoading(true)
+      const [stats, userPositions, activity] = await Promise.all([
+        portfolioAPI.getPortfolioStats(user.id),
+        portfolioAPI.getPositions(user.id),
+        portfolioAPI.getRecentActivity(user.id)
+      ])
+
+      setPortfolioStats(stats)
+      setPositions(userPositions)
+      setRecentActivity(activity)
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   if (user?.role !== "investor") {
     return (
@@ -40,73 +71,34 @@ export function DashboardPage() {
     )
   }
 
-  // Mock portfolio data with more realistic values
-  const portfolioStats = {
-    totalValue: 125430,
-    totalInvested: 98500,
-    totalROI: 27.3,
-    monthlyReturn: 8.9,
-    weeklyReturn: 2.1,
-    dailyReturn: 0.5,
-    activePositions: copiedTraders.length,
-    totalTrades: 156,
-    winRate: 78,
-    profitLoss: 26930,
-    riskScore: 65,
+  if (isLoading || !portfolioStats) {
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="h-20 bg-gray-800 rounded-xl"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-32 bg-gray-800 rounded-xl"></div>
+          ))}
+        </div>
+        <div className="h-64 bg-gray-800 rounded-xl"></div>
+      </div>
+    )
   }
 
-  const mockPositions = copiedTraders.map((ct) => ({
-    ...ct,
-    currentROI: Math.random() * 40 - 10,
-    unrealizedPL: Math.random() * 2000 - 500,
-    lastUpdate: new Date(Date.now() - Math.random() * 86400000).toISOString(),
-    volume: Math.floor(Math.random() * 50000) + 10000,
-    trades: Math.floor(Math.random() * 50) + 10,
-  }))
-
-  const recentActivity = [
-    {
-      type: "copy",
-      action: "Started copying",
-      trader: "Alex Chen",
-      time: "2 hours ago",
-      amount: "$5,000",
-      icon: Users,
-      color: "text-[#10B981]",
-    },
-    {
-      type: "trade",
-      action: "Trade executed",
-      trader: "Sarah Johnson",
-      time: "4 hours ago",
-      amount: "+$245",
-      icon: TrendingUp,
-      color: "text-blue-400",
-    },
-    {
-      type: "profit",
-      action: "Profit realized",
-      trader: "Mike Rodriguez",
-      time: "1 day ago",
-      amount: "+$1,250",
-      icon: DollarSign,
-      color: "text-green-400",
-    },
-    {
-      type: "stop",
-      action: "Stopped copying",
-      trader: "Emma Wilson",
-      time: "2 days ago",
-      amount: "-$150",
-      icon: AlertTriangle,
-      color: "text-red-400",
-    },
-  ]
-
-  const topPerformingCopies = mockPositions
+  const topPerformingCopies = positions
     .filter((p) => p.currentROI > 0)
     .sort((a, b) => b.currentROI - a.currentROI)
     .slice(0, 3)
+
+  const getActivityIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Users': return Users
+      case 'TrendingUp': return TrendingUp
+      case 'DollarSign': return DollarSign
+      case 'AlertTriangle': return AlertTriangle
+      default: return Activity
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -272,7 +264,7 @@ export function DashboardPage() {
               </div>
 
               <div className="pt-3 border-t border-gray-700">
-                <p className="text-xs text-gray-400">�� Consider diversifying into more asset classes to reduce risk</p>
+                <p className="text-xs text-gray-400">💡 Consider diversifying into more asset classes to reduce risk</p>
               </div>
             </CardContent>
           </Card>
