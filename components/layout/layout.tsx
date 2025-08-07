@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Sidebar } from "@/components/layout/sidebar"
+import { ProfessionalSidebar } from "@/components/layout/professional-sidebar"
 import { ProfessionalHeader } from "@/components/layout/professional-header"
 import { Footer } from "@/components/layout/footer"
 import { AIAssistant } from "@/components/ai/ai-assistant"
