@@ -1,6 +1,6 @@
 "use client"
 
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import { TrendingUp, Mail, MessageCircle, FileText, Users, AlertTriangle, Heart } from "lucide-react"
 
 export function Footer() {
