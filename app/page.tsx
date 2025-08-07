@@ -34,15 +34,7 @@ export default function Home() {
   }, [])
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
-        <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-          <div className="w-16 h-16 border-4 border-[#10B981] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-white mb-2">S17 Trading</h2>
-          <p className="text-gray-400">Loading your trading platform...</p>
-        </motion.div>
-      </div>
-    )
+    return <FullPageLoading />
   }
 
   if (showWelcome && isAuthenticated) {
