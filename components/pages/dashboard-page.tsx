@@ -327,7 +327,7 @@ export function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {mockPositions.length === 0 ? (
+            {positions.length === 0 ? (
               <div className="text-center py-12">
                 <PieChart className="h-16 w-16 text-gray-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white mb-2">No active copy positions</h3>
@@ -336,7 +336,7 @@ export function DashboardPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {mockPositions.map((position, index) => (
+                {positions.map((position, index) => (
                   <motion.div
                     key={position.traderId}
                     initial={{ opacity: 0, x: -20 }}
