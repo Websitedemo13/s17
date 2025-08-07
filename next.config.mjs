@@ -10,7 +10,6 @@ const nextConfig = {
     unoptimized: true,
     domains: ['placeholder.svg', 'api.coingecko.com'],
   },
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
