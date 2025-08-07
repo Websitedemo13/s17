@@ -1,8 +1,10 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useTradingStore } from "@/lib/trading-store"
 import { useAuthStore } from "@/lib/auth-store"
+import { portfolioAPI, type PortfolioStats, type Position, type ActivityItem } from "@/lib/api/portfolio"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -27,6 +29,37 @@ import {
 export function DashboardPage() {
   const { user } = useAuthStore()
   const { copiedTraders, uncopyTrader } = useTradingStore()
+  const [portfolioStats, setPortfolioStats] = useState<PortfolioStats | null>(null)
+  const [positions, setPositions] = useState<Position[]>([])
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (user?.id) {
+      loadDashboardData()
+    }
+  }, [user?.id])
+
+  const loadDashboardData = async () => {
+    if (!user?.id) return
+
+    try {
+      setIsLoading(true)
+      const [stats, userPositions, activity] = await Promise.all([
+        portfolioAPI.getPortfolioStats(user.id),
+        portfolioAPI.getPositions(user.id),
+        portfolioAPI.getRecentActivity(user.id)
+      ])
+
+      setPortfolioStats(stats)
+      setPositions(userPositions)
+      setRecentActivity(activity)
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   if (user?.role !== "investor") {
     return (
@@ -38,73 +71,34 @@ export function DashboardPage() {
     )
   }
 
-  // Mock portfolio data with more realistic values
-  const portfolioStats = {
-    totalValue: 125430,
-    totalInvested: 98500,
-    totalROI: 27.3,
-    monthlyReturn: 8.9,
-    weeklyReturn: 2.1,
-    dailyReturn: 0.5,
-    activePositions: copiedTraders.length,
-    totalTrades: 156,
-    winRate: 78,
-    profitLoss: 26930,
-    riskScore: 65,
+  if (isLoading || !portfolioStats) {
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="h-20 bg-gray-800 rounded-xl"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-32 bg-gray-800 rounded-xl"></div>
+          ))}
+        </div>
+        <div className="h-64 bg-gray-800 rounded-xl"></div>
+      </div>
+    )
   }
 
-  const mockPositions = copiedTraders.map((ct) => ({
-    ...ct,
-    currentROI: Math.random() * 40 - 10,
-    unrealizedPL: Math.random() * 2000 - 500,
-    lastUpdate: new Date(Date.now() - Math.random() * 86400000).toISOString(),
-    volume: Math.floor(Math.random() * 50000) + 10000,
-    trades: Math.floor(Math.random() * 50) + 10,
-  }))
-
-  const recentActivity = [
-    {
-      type: "copy",
-      action: "Started copying",
-      trader: "Alex Chen",
-      time: "2 hours ago",
-      amount: "$5,000",
-      icon: Users,
-      color: "text-[#10B981]",
-    },
-    {
-      type: "trade",
-      action: "Trade executed",
-      trader: "Sarah Johnson",
-      time: "4 hours ago",
-      amount: "+$245",
-      icon: TrendingUp,
-      color: "text-blue-400",
-    },
-    {
-      type: "profit",
-      action: "Profit realized",
-      trader: "Mike Rodriguez",
-      time: "1 day ago",
-      amount: "+$1,250",
-      icon: DollarSign,
-      color: "text-green-400",
-    },
-    {
-      type: "stop",
-      action: "Stopped copying",
-      trader: "Emma Wilson",
-      time: "2 days ago",
-      amount: "-$150",
-      icon: AlertTriangle,
-      color: "text-red-400",
-    },
-  ]
-
-  const topPerformingCopies = mockPositions
+  const topPerformingCopies = positions
     .filter((p) => p.currentROI > 0)
     .sort((a, b) => b.currentROI - a.currentROI)
     .slice(0, 3)
+
+  const getActivityIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Users': return Users
+      case 'TrendingUp': return TrendingUp
+      case 'DollarSign': return DollarSign
+      case 'AlertTriangle': return AlertTriangle
+      default: return Activity
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -333,7 +327,7 @@ export function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {mockPositions.length === 0 ? (
+            {positions.length === 0 ? (
               <div className="text-center py-12">
                 <PieChart className="h-16 w-16 text-gray-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white mb-2">No active copy positions</h3>
@@ -342,7 +336,7 @@ export function DashboardPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {mockPositions.map((position, index) => (
+                {positions.map((position, index) => (
                   <motion.div
                     key={position.traderId}
                     initial={{ opacity: 0, x: -20 }}
@@ -391,7 +385,7 @@ export function DashboardPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => uncopyTrader(position.traderId)}
+                          onClick={() => uncopyTrader(position.id)}
                           className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white bg-transparent"
                         >
                           Stop Copy
@@ -417,34 +411,37 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg bg-gray-800`}>
-                      <activity.icon className={`h-4 w-4 ${activity.color}`} />
+              {recentActivity.map((activity, index) => {
+                const ActivityIcon = getActivityIcon(activity.icon)
+                return (
+                  <motion.div
+                    key={activity.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2 rounded-lg bg-gray-800`}>
+                        <ActivityIcon className={`h-4 w-4 ${activity.color}`} />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">
+                          {activity.action} {activity.trader && <span className="text-[#10B981] font-semibold">{activity.trader}</span>}
+                        </p>
+                        <p className="text-gray-400 text-xs">{activity.time}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white text-sm font-medium">
-                        {activity.action} <span className="text-[#10B981] font-semibold">{activity.trader}</span>
-                      </p>
-                      <p className="text-gray-400 text-xs">{activity.time}</p>
+                    <div className="text-right">
+                      <span
+                        className={`font-semibold ${activity.amount.startsWith("+") ? "text-[#10B981]" : activity.amount.startsWith("-") ? "text-red-400" : "text-white"}`}
+                      >
+                        {activity.amount}
+                      </span>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <span
-                      className={`font-semibold ${activity.amount.startsWith("+") ? "text-[#10B981]" : activity.amount.startsWith("-") ? "text-red-400" : "text-white"}`}
-                    >
-                      {activity.amount}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
             </div>
           </CardContent>
         </Card>

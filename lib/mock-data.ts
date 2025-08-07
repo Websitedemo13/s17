@@ -15,6 +15,7 @@ export const mockTraders = [
     copiers: 1247,
     totalTrades: 234,
     verified: true,
+    subscriptionFee: 49,
     description: "Professional forex trader with 8+ years experience. Specializing in EUR/USD and GBP/USD pairs.",
     performance: [
       { month: "Jan", roi: 12.5 },
@@ -42,6 +43,7 @@ export const mockTraders = [
     copiers: 892,
     totalTrades: 456,
     verified: true,
+    subscriptionFee: 39,
     description: "Conservative trader focusing on consistent small profits with minimal risk exposure.",
     performance: [
       { month: "Jan", roi: 9.8 },
@@ -68,6 +70,7 @@ export const mockTraders = [
     copiers: 623,
     totalTrades: 789,
     verified: true,
+    subscriptionFee: 69,
     description: "Aggressive day trader specializing in cryptocurrency and tech stocks.",
     performance: [
       { month: "Jan", roi: 8.5 },
@@ -94,6 +97,7 @@ export const mockTraders = [
     copiers: 456,
     totalTrades: 123,
     verified: false,
+    subscriptionFee: 29,
     description: "Long-term position trader with focus on fundamental analysis and market trends.",
     performance: [
       { month: "Jan", roi: 7.2 },
@@ -117,6 +121,7 @@ export const mockTraders = [
     copiers: 789,
     totalTrades: 1234,
     verified: true,
+    subscriptionFee: 89,
     description: "Quantitative trader using advanced algorithms and machine learning for market analysis.",
     performance: [
       { month: "Jan", roi: 11.3 },
@@ -130,6 +135,129 @@ export const mockTraders = [
       { symbol: "QQQ", action: "BUY", profit: 234.8, date: "2024-01-14", status: "open" },
     ],
   },
+]
+
+export const mockTradeHistory = [
+  {
+    id: "1",
+    traderId: "1",
+    symbol: "EUR/USD",
+    type: "BUY",
+    amount: 10000,
+    entryPrice: 1.0925,
+    exitPrice: 1.0975,
+    pnl: 458.72,
+    date: "2024-01-15T14:30:00Z",
+    status: "closed"
+  },
+  {
+    id: "2",
+    traderId: "1",
+    symbol: "GBP/USD",
+    type: "SELL",
+    amount: 8000,
+    entryPrice: 1.2695,
+    exitPrice: 1.2665,
+    pnl: 240.00,
+    date: "2024-01-14T09:15:00Z",
+    status: "closed"
+  },
+  {
+    id: "3",
+    traderId: "1",
+    symbol: "USD/JPY",
+    type: "BUY",
+    amount: 12000,
+    entryPrice: 149.25,
+    exitPrice: 149.85,
+    pnl: 480.00,
+    date: "2024-01-13T16:45:00Z",
+    status: "closed"
+  },
+  {
+    id: "4",
+    traderId: "2",
+    symbol: "BTC/USD",
+    type: "BUY",
+    amount: 1000,
+    entryPrice: 43500.00,
+    exitPrice: 45200.00,
+    pnl: 1700.00,
+    date: "2024-01-15T11:20:00Z",
+    status: "closed"
+  },
+  {
+    id: "5",
+    traderId: "2",
+    symbol: "ETH/USD",
+    type: "SELL",
+    amount: 5000,
+    entryPrice: 2480.00,
+    exitPrice: 2520.00,
+    pnl: -200.00,
+    date: "2024-01-14T13:30:00Z",
+    status: "closed"
+  },
+  {
+    id: "6",
+    traderId: "3",
+    symbol: "AAPL",
+    type: "BUY",
+    amount: 500,
+    entryPrice: 185.50,
+    exitPrice: 188.75,
+    pnl: 1625.00,
+    date: "2024-01-15T10:00:00Z",
+    status: "closed"
+  },
+  {
+    id: "7",
+    traderId: "3",
+    symbol: "TSLA",
+    type: "SELL",
+    amount: 200,
+    entryPrice: 245.00,
+    exitPrice: 238.50,
+    pnl: 1300.00,
+    date: "2024-01-14T14:15:00Z",
+    status: "closed"
+  },
+  {
+    id: "8",
+    traderId: "4",
+    symbol: "GOLD",
+    type: "BUY",
+    amount: 100,
+    entryPrice: 2035.50,
+    exitPrice: 2045.75,
+    pnl: 1025.00,
+    date: "2024-01-12T08:30:00Z",
+    status: "closed"
+  },
+  {
+    id: "9",
+    traderId: "5",
+    symbol: "SPY",
+    type: "BUY",
+    amount: 1000,
+    entryPrice: 455.20,
+    exitPrice: 460.85,
+    pnl: 5650.00,
+    date: "2024-01-15T15:45:00Z",
+    status: "closed"
+  },
+  {
+    id: "10",
+    traderId: "5",
+    symbol: "QQQ",
+    type: "BUY",
+    amount: 800,
+    entryPrice: 385.00,
+    exitPrice: 388.90,
+    pnl: 3120.00,
+    date: "2024-01-14T12:00:00Z",
+    status: "closed"
+  }
 ]
 
 export const mockSocialPosts = [

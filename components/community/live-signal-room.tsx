@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuthStore } from "@/lib/auth-store"
+import { getTradingSignals, getSignalProviders, type TradingSignal, type SignalProvider } from "@/lib/api/trading-signals"
 import {
   Radio,
   Users,
@@ -71,8 +72,33 @@ export function LiveSignalRoom() {
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false)
   const [viewers, setViewers] = useState(1247)
   const [isFollowing, setIsFollowing] = useState(false)
+  const [signals, setSignals] = useState<TradingSignal[]>([])
+  const [signalProviders, setSignalProviders] = useState<SignalProvider[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const [signals, setSignals] = useState<LiveSignal[]>([
+  useEffect(() => {
+    loadSignalsData()
+    // Update signals every 30 seconds
+    const interval = setInterval(loadSignalsData, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const loadSignalsData = async () => {
+    try {
+      const [signalsData, providersData] = await Promise.all([
+        getTradingSignals(),
+        getSignalProviders()
+      ])
+      setSignals(signalsData)
+      setSignalProviders(providersData)
+    } catch (error) {
+      console.error('Failed to load signals data:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const [mockSignals] = useState<LiveSignal[]>([
     {
       id: "1",
       traderId: "1",

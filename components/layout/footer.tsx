@@ -1,6 +1,6 @@
 "use client"
 
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import { TrendingUp, Mail, MessageCircle, FileText, Users, AlertTriangle, Heart } from "lucide-react"
 
 export function Footer() {
@@ -68,7 +68,7 @@ export function Footer() {
             <ul className="space-y-2">
               {footerLinks.platform.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">
+                  <Link href={link.href} className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -83,7 +83,7 @@ export function Footer() {
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-gray-400 hover:text-[#10B981] text-sm transition-colors flex items-center gap-2"
                   >
                     {link.name === "Report Bug" && <AlertTriangle className="h-3 w-3" />}
@@ -103,7 +103,7 @@ export function Footer() {
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-gray-400 hover:text-[#10B981] text-sm transition-colors flex items-center gap-2"
                   >
                     <FileText className="h-3 w-3" />

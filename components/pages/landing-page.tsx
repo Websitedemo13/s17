@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useAuthStore } from "@/lib/auth-store"
-import { getMarketData } from "@/lib/mock-data"
+import { getMarketData } from "@/lib/api/market-data"
 import {
   TrendingUp,
   Users,
