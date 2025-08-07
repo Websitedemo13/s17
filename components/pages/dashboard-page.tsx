@@ -411,34 +411,37 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg bg-gray-800`}>
-                      <activity.icon className={`h-4 w-4 ${activity.color}`} />
+              {recentActivity.map((activity, index) => {
+                const ActivityIcon = getActivityIcon(activity.icon)
+                return (
+                  <motion.div
+                    key={activity.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2 rounded-lg bg-gray-800`}>
+                        <ActivityIcon className={`h-4 w-4 ${activity.color}`} />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">
+                          {activity.action} {activity.trader && <span className="text-[#10B981] font-semibold">{activity.trader}</span>}
+                        </p>
+                        <p className="text-gray-400 text-xs">{activity.time}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white text-sm font-medium">
-                        {activity.action} <span className="text-[#10B981] font-semibold">{activity.trader}</span>
-                      </p>
-                      <p className="text-gray-400 text-xs">{activity.time}</p>
+                    <div className="text-right">
+                      <span
+                        className={`font-semibold ${activity.amount.startsWith("+") ? "text-[#10B981]" : activity.amount.startsWith("-") ? "text-red-400" : "text-white"}`}
+                      >
+                        {activity.amount}
+                      </span>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <span
-                      className={`font-semibold ${activity.amount.startsWith("+") ? "text-[#10B981]" : activity.amount.startsWith("-") ? "text-red-400" : "text-white"}`}
-                    >
-                      {activity.amount}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
             </div>
           </CardContent>
         </Card>
